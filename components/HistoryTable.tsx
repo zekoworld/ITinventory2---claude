@@ -1,4 +1,3 @@
-// components/HistoryTable.tsx
 'use client';
 
 import { History } from '@prisma/client';
