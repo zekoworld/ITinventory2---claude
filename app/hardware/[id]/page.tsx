@@ -1,4 +1,3 @@
-// app/hardware/[id]/page.tsx
 import { prisma } from '@/lib/prisma';
 import HardwareForm from '@/components/HardwareForm';
 import HistoryTable from '@/components/HistoryTable';
