@@ -1,0 +1,111 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  VIEWER
+}
+
+enum JobStatus {
+  Active
+  Departed
+  Retired
+}
+
+enum WorkStyle {
+  Onsite
+  Remote
+  Hybrid
+}
+
+enum AssetStatus {
+  Setup
+  ToBeDeployed
+  InUse
+  ToBeRepaired
+  UnderRepair
+  Repaired
+  Retired
+}
+
+enum LocationType {
+  Storage
+  SetupShelf
+  DeploymentShelf
+  DamagedShelf
+  UnderRepairShelf
+  RepairedShelf
+  RetiredShelf
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  role           UserRole  @default(VIEWER)
+  jobStatus      JobStatus @default(Active)
+  workStyle      WorkStyle @default(Onsite)
+  currentAddress String?
+  homeAddress    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  assignedHardware Hardware[]
+  
+  @@map("users")
+}
+
+model Hardware {
+  id                      String      @id @default(cuid())
+  name                    String
+  manufacturer            String
+  category                String
+  assetTag                String      @unique
+  status                  AssetStatus @default(Setup)
+  location                LocationType @default(SetupShelf)
+  
+  purchaseDate            DateTime?
+  newAssetArrivalDate     DateTime?
+  warrantyEndDate         DateTime?
+  deploymentSetupDate     DateTime?
+  toBeDeployedDate        DateTime?
+  firstInUseAssetDate     DateTime?
+  userInUseDate           DateTime?
+  reportedToRepairDate    DateTime?
+  underRepairDate         DateTime?
+  repairedDate            DateTime?
+  retiredDate             DateTime?
+  outOfRetirementDate     DateTime?
+  
+  assignedToUserId        String?
+  assignedTo              User?       @relation(fields: [assignedToUserId], references: [id])
+  history                 History[]
+  
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  
+  @@map("hardware")
+}
+
+model History {
+  id          String       @id @default(cuid())
+  hardwareId  String
+  status      AssetStatus
+  location    LocationType
+  changedBy   String
+  date        DateTime     @default(now())
+  note        String?
+  userId      String?
+  
+  hardware    Hardware     @relation(fields: [hardwareId], references: [id], onDelete: Cascade)
+  
+  @@map("history")
+}
