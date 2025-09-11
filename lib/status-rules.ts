@@ -1,4 +1,3 @@
-// lib/status-rules.ts
 import { AssetStatus, LocationType } from '@prisma/client';
 
 export interface StatusRule {
