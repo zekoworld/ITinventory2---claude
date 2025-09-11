@@ -1,4 +1,3 @@
-// app/page.tsx
 import HardwareTable from '@/components/HardwareTable';
 import Link from 'next/link';
 
