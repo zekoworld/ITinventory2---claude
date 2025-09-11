@@ -1,4 +1,3 @@
-// app/api/hardware/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { STATUS_RULES, canTransitionStatus } from '@/lib/status-rules';
