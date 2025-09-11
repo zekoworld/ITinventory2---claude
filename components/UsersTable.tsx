@@ -1,4 +1,3 @@
-// components/UsersTable.tsx
 'use client';
 
 import { User, JobStatus } from '@prisma/client';
