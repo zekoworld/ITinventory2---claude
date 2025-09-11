@@ -1,4 +1,3 @@
-// prisma/seed.ts
 import { PrismaClient, UserRole, JobStatus, WorkStyle, AssetStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
