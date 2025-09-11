@@ -1,4 +1,3 @@
-/ components/HardwareForm.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
