@@ -1,0 +1,123 @@
+// app/globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom form styles */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+  @apply border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+}
+
+/* Status badge styles */
+.status-badge {
+  @apply inline-flex px-2 py-1 text-xs font-semibold rounded-full;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.btn-danger {
+  @apply inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+}
+
+/* Loading states */
+.loading {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Responsive table */
+.table-responsive {
+  @apply overflow-x-auto;
+}
+
+@media (max-width: 640px) {
+  .table-responsive table {
+    @apply text-xs;
+  }
+  
+  .table-responsive th,
+  .table-responsive td {
+    @apply px-2 py-2;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break {
+    page-break-before: always;
+  }
+}
