@@ -1,4 +1,3 @@
-// app/hardware/new/page.tsx
 import HardwareForm from '@/components/HardwareForm';
 import Link from 'next/link';
 
