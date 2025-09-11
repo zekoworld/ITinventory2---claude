@@ -1,4 +1,3 @@
-// app/users/[id]/page.tsx
 import { prisma } from '@/lib/prisma';
 import UserForm from '@/components/UserForm';
 import Link from 'next/link';
