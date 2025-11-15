@@ -14,7 +14,7 @@ interface HardwareFormProps {
 }
 
 export default function HardwareForm({ hardware, onSave }: HardwareFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     name: '',
     manufacturer: '',
     category: '',
