@@ -291,7 +291,7 @@ export default function HardwareForm({ hardware, onSave }: HardwareFormProps) {
         )}
       </div>
 
-      {STATUS_RULES[formData.status]?.requiresNote && (
+      {STATUS_RULES[formData.status as AssetStatus]?.requiresNote && (
         <div>
           <label className="block text-sm font-medium text-gray-700">Note *</label>
           <textarea
