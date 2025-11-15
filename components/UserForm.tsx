@@ -9,7 +9,7 @@ interface UserFormProps {
 }
 
 export default function UserForm({ user, onSave }: UserFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     name: '',
     email: '',
     role: UserRole.VIEWER,
