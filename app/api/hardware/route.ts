@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
-    const hardware = await prisma.asset.findMany({
+    const hardware = await prisma.hardware.findMany({
       include: {
         assignedTo: true,
       },
@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     const { note, ...hardwareData } = data;
     
-    // Convert date strings to Date objects
     const dateFields = ['purchaseDate', 'warrantyEndDate', 'deploymentSetupDate', 'underRepairDate', 'repairedDate', 'retiredDate'];
     dateFields.forEach(field => {
       if (hardwareData[field]) {
@@ -31,27 +30,25 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // Set first in use date if status is InUse
     if (hardwareData.status === 'InUse' && !hardwareData.firstInUseAssetDate) {
       hardwareData.firstInUseAssetDate = new Date();
     }
 
-    // Create the asset (changed from hardware to asset)
-    const hardware = await prisma.asset.create({
+    const hardware = await prisma.hardware.create({
       data: hardwareData,
       include: {
         assignedTo: true,
       },
     });
 
-    // Create history record (check your schema for correct field name)
-    await prisma.checkoutRecord.create({
+    await prisma.history.create({
       data: {
-        assetId: hardware.id,
+        hardwareId: hardware.id,
+        status: hardware.status,
+        location: hardware.location,
+        changedBy: 'Admin',
+        note: note || 'Asset created',
         userId: hardware.assignedToUserId,
-        status: 'PENDING', // or whatever status you use
-        requestedAt: new Date(),
-        notes: note || 'Asset created',
       },
     });
 
