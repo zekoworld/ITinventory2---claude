@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import UsersTable from '@/components/UsersTable';
 import Link from 'next/link';
-
+export const dynamic = 'force-dynamic';
 export default async function UsersPage() {
   const users = await prisma.user.findMany({
     orderBy: {
