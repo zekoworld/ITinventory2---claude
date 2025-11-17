@@ -120,3 +120,65 @@ textarea:disabled {
     page-break-before: always;
   }
 }
+/* Fallback styles if Tailwind @apply doesn't work */
+body {
+  background-color: #f9fafb;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Force button styles */
+.btn-primary {
+  background-color: #4f46e5 !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid transparent !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+.btn-secondary {
+  background-color: white !important;
+  color: #374151 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid #d1d5db !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+/* Force table styles */
+.bg-white {
+  background-color: white !important;
+}
+
+.shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem !important;
+}
+
+.text-3xl {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+}
+
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.text-gray-900 {
+  color: #111827 !important;
+}
