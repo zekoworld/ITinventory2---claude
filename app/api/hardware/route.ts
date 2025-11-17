@@ -3,6 +3,10 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
+    console.log('Starting hardware fetch...');
+    console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    console.log('DIRECT_URL exists:', !!process.env.DIRECT_URL);
+    
     const hardware = await prisma.hardware.findMany({
       include: {
         assignedTo: true,
@@ -11,13 +15,21 @@ export async function GET() {
         updatedAt: 'desc',
       },
     });
+    
+    console.log('Hardware fetched successfully, count:', hardware.length);
     return NextResponse.json(hardware);
   } catch (error) {
-    console.error('Error fetching hardware:', error);
-    return NextResponse.json({ error: 'Failed to fetch hardware' }, { status: 500 });
+    console.error('Detailed error fetching hardware:', error);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    
+    return NextResponse.json({ 
+      error: 'Failed to fetch hardware',
+      details: error.message,
+      type: error.name
+    }, { status: 500 });
   }
 }
-
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
