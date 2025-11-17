@@ -35,30 +35,6 @@ export async function POST() {
 
     // ... rest of the seed data from the artifact I sent you earlier
 
-    // Check if already seeded
-    const existingUsers = await prisma.user.count();
-    if (existingUsers > 0) {
-      return NextResponse.json({ 
-        message: 'Database already seeded',
-        existingUsers 
-      });
-    }
-
-    // ===== USERS =====
-    
-    const adminUser = await prisma.user.create({
-      data: {
-        id: 'user_admin_001',
-        name: 'Admin User',
-        email: 'admin@company.com',
-        role: UserRole.ADMIN,
-        jobStatus: JobStatus.Active,
-        workStyle: WorkStyle.Onsite,
-        currentAddress: 'Main Office, 123 Business Street, New York, NY 10001',
-        homeAddress: '456 Home Avenue, Brooklyn, NY 11201',
-      },
-    });
-
     const onsiteUser = await prisma.user.create({
       data: {
         id: 'user_onsite_001',
