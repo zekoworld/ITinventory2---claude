@@ -1,18 +1,39 @@
-export async function GET() {
-  return POST();
-}
-
-export async function POST() {
-
-// app/api/seed/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient, UserRole, JobStatus, WorkStyle, AssetStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export async function GET() {
+  return POST();
+}
+
 export async function POST() {
   try {
     console.log('🌱 Starting comprehensive seed...');
+
+    const existingUsers = await prisma.user.count();
+    if (existingUsers > 0) {
+      return NextResponse.json({ 
+        message: 'Database already seeded',
+        existingUsers 
+      });
+    }
+
+    // Create users
+    const adminUser = await prisma.user.create({
+      data: {
+        id: 'user_admin_001',
+        name: 'Admin User',
+        email: 'admin@company.com',
+        role: UserRole.ADMIN,
+        jobStatus: JobStatus.Active,
+        workStyle: WorkStyle.Onsite,
+        currentAddress: 'Main Office, 123 Business Street, New York, NY 10001',
+        homeAddress: '456 Home Avenue, Brooklyn, NY 11201',
+      },
+    });
+
+    // ... rest of the seed data from the artifact I sent you earlier
 
     // Check if already seeded
     const existingUsers = await prisma.user.count();
