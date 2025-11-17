@@ -1,7 +1,40 @@
 import HardwareTable from '@/components/HardwareTable';
 import Link from 'next/link';
+
 export const dynamic = 'force-dynamic';
-export default function Home() {
+
+async function getHardware() {
+  try {
+    const res = await fetch('https://i-tinventory2-claude20.vercel.app/api/hardware', {
+      cache: 'no-store',
+    });
+    
+    if (!res.ok) {
+      throw new Error('Failed to fetch hardware');
+    }
+    
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching hardware:', error);
+    return [];
+  }
+}
+
+async function getStats(hardware: any[]) {
+  const stats = {
+    total: hardware.length,
+    inUse: hardware.filter(h => h.status === 'InUse').length,
+    needRepair: hardware.filter(h => h.status === 'ToBeRepaired' || h.status === 'UnderRepair').length,
+    activeUsers: new Set(hardware.filter(h => h.assignedTo).map(h => h.assignedTo.id)).size,
+  };
+  
+  return stats;
+}
+
+export default async function Home() {
+  const hardware = await getHardware();
+  const stats = await getStats(hardware);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -15,13 +48,13 @@ export default function Home() {
           <div className="flex space-x-4">
             <Link
               href="/hardware/new"
-              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="btn-primary"
             >
               Add Hardware
             </Link>
             <Link
               href="/users"
-              className="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="btn-secondary"
             >
               Manage Users
             </Link>
@@ -43,7 +76,7 @@ export default function Home() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Total Assets</dt>
-                    <dd className="text-lg font-medium text-gray-900">Loading...</dd>
+                    <dd className="text-lg font-medium text-gray-900">{stats.total}</dd>
                   </dl>
                 </div>
               </div>
@@ -63,7 +96,7 @@ export default function Home() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">In Use</dt>
-                    <dd className="text-lg font-medium text-gray-900">Loading...</dd>
+                    <dd className="text-lg font-medium text-gray-900">{stats.inUse}</dd>
                   </dl>
                 </div>
               </div>
@@ -83,7 +116,7 @@ export default function Home() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Need Repair</dt>
-                    <dd className="text-lg font-medium text-gray-900">Loading...</dd>
+                    <dd className="text-lg font-medium text-gray-900">{stats.needRepair}</dd>
                   </dl>
                 </div>
               </div>
@@ -103,7 +136,7 @@ export default function Home() {
                 <div className="ml-5 w-0 flex-1">
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Active Users</dt>
-                    <dd className="text-lg font-medium text-gray-900">Loading...</dd>
+                    <dd className="text-lg font-medium text-gray-900">{stats.activeUsers}</dd>
                   </dl>
                 </div>
               </div>
@@ -111,7 +144,7 @@ export default function Home() {
           </div>
         </div>
 
-        <HardwareTable />
+        <HardwareTable hardware={hardware} />
       </div>
     </div>
   );
