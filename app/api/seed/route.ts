@@ -1,3 +1,9 @@
+export async function GET() {
+  return POST();
+}
+
+export async function POST() {
+
 // app/api/seed/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient, UserRole, JobStatus, WorkStyle, AssetStatus } from '@prisma/client';
