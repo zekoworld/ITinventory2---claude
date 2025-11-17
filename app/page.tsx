@@ -144,7 +144,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <HardwareTable hardware={hardware} />
+        <HardwareTable />
       </div>
     </div>
   );
