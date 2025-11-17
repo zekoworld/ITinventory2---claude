@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { Hardware, User, AssetStatus } from '@prisma/client';
 
@@ -71,7 +70,7 @@ export default function HardwareTable() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {hardware.map((item) => (
+            {(hardware || []).map((item) => (
               <tr key={item.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
